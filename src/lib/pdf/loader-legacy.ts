@@ -12,6 +12,8 @@
 // Type definitions for legacy pdfjs-dist
 type PDFJSLegacyModule = typeof import('pdfjs-dist-legacy');
 
+import { withBasePath } from '../utils/path';
+
 // Cached library instance
 let pdfjsLegacyInstance: PDFJSLegacyModule | null = null;
 
@@ -31,7 +33,7 @@ function configureLegacyWorker(pdfjsLib: PDFJSLegacyModule): void {
     if (typeof window !== 'undefined') {
         // Use the local worker file for offline support
         // The worker file is located in public/workers/pdf.worker.legacy.min.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '/workers/pdf.worker.legacy.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = withBasePath('/workers/pdf.worker.legacy.min.js');
         legacyWorkerConfigured = true;
     }
 }

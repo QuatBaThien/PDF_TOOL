@@ -5,6 +5,8 @@
  * Uses script injection to avoid Next.js SSR bundling issues.
  */
 
+import { withBasePath } from '../utils/path';
+
 // QPDF instance singleton
 let qpdfInstance: any = null;
 let loadingPromise: Promise<any> | null = null;
@@ -35,7 +37,7 @@ export async function loadQpdf(): Promise<any> {
         qpdfInstance = await (window as any).createQpdfModule({
           locateFile: (path: string) => {
             if (path.endsWith('.wasm')) {
-              return '/qpdf.wasm';
+              return withBasePath('/qpdf.wasm');
             }
             return path;
           },
@@ -46,7 +48,7 @@ export async function loadQpdf(): Promise<any> {
 
       // Load the script dynamically
       const script = document.createElement('script');
-      script.src = '/qpdf.js';
+      script.src = withBasePath('/qpdf.js');
       script.async = true;
 
       script.onload = async () => {
@@ -61,7 +63,7 @@ export async function loadQpdf(): Promise<any> {
           qpdfInstance = await createModule({
             locateFile: (path: string) => {
               if (path.endsWith('.wasm')) {
-                return '/qpdf.wasm';
+                return withBasePath('/qpdf.wasm');
               }
               return path;
             },

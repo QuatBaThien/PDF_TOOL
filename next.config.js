@@ -45,6 +45,7 @@ const nextConfig = {
     NEXT_PUBLIC_BUILD_DATE: new Date().toISOString(),
     NEXT_PUBLIC_DISABLE_UPDATE_CHECK:
       process.env.DISABLE_UPDATE_CHECK || process.env.NEXT_PUBLIC_DISABLE_UPDATE_CHECK || 'false',
+    NEXT_PUBLIC_BASE_PATH: process.env.BASE_PATH || process.env.NEXT_PUBLIC_BASE_PATH || '',
   },
 
   // Webpack configuration for WASM modules

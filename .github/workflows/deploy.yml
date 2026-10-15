@@ -46,7 +46,8 @@ jobs:
 
       # Setup GitHub Pages
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        id: pages
+        uses: actions/configure-pages@v5
 
       # Restore cache for faster builds
       - name: Restore cache
@@ -71,6 +72,12 @@ jobs:
         env:
           # Add any required environment variables here
           NODE_ENV: production
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      # Ensure GitHub Pages does not ignore _next folder via Jekyll
+      - name: Disable Jekyll
+        run: touch ./out/.nojekyll
 
       # Upload artifact for deployment
       - name: Upload artifact
